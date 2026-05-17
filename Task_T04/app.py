@@ -11,8 +11,12 @@ SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK")
 logging.basicConfig(
     filename='integration.log',
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
+
+# Disable Flask/Werkzeug logs from polluting file
+log = logging.getLogger('werkzeug')
+log.disabled = True
 
 # Home route
 @app.route('/')
