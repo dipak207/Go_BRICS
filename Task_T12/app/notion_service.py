@@ -14,8 +14,8 @@ from datetime import (
 
 import time
 
-
 notion = Client(auth=NOTION_TOKEN)
+
 
 def check_duplicate_lead(email: str):
 
@@ -57,6 +57,7 @@ def check_duplicate_lead(email: str):
 
         return False
 
+
 def create_notion_lead(data):
 
     for attempt in range(3):
@@ -96,6 +97,7 @@ def create_notion_lead(data):
                         ]
                     },
 
+                    
                     "Email": {
                         "email": data.email
                     },
@@ -104,10 +106,23 @@ def create_notion_lead(data):
                         "phone_number": data.phone
                     },
 
+                    "Budget": {
+                        "number": data.budget
+                    },
+
                     "Status": {
                         "status": {
                             "name": "New Lead"
                         }
+                    },
+
+                    "Assigned To": {
+                        "people": [
+                            {
+                                "object": "user",
+                                "id": "2bed872b-594c-8121-9830-000262aa66b9"
+                            }
+                        ]
                     },
 
                     "Priority": {
@@ -118,7 +133,13 @@ def create_notion_lead(data):
 
                     "Lead Source": {
                         "select": {
-                            "name": "Inbound"
+                            "name": data.source
+                        }
+                    },
+
+                    "Last Contacted": {
+                        "date": {
+                            "start": datetime.now().date().isoformat()
                         }
                     },
 
@@ -128,7 +149,6 @@ def create_notion_lead(data):
                         }
                     },
 
-                   
                     "Notes": {
                         "rich_text": [
                             {

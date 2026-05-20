@@ -29,4 +29,6 @@ class LeadModel(BaseModel):
         max_length=15
     )
 
+    budget: float
+
     source: Optional[str] = "Inbound"
